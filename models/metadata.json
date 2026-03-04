@@ -1,0 +1,1 @@
+{"mae": 82, "rmse": 95, "last_actual_fdi": 200.0, "model_type": "Hybrid Holt-Winters + SVR (Lag Based)", "residual_std": 126.2757434550245}

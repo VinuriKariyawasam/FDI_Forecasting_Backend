@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from app.services.prediction_service import predict_fdi
+from services.prediction_service import predict_fdi
  
 BASE_DIR = Path(__file__).resolve().parent.parent
  

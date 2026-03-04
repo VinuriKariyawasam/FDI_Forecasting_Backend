@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 import json
 from pathlib import Path
-from app.services.shap_service import compute_shap_values
+from services.shap_service import compute_shap_values
  
 BASE_DIR = Path(__file__).resolve().parent.parent
  

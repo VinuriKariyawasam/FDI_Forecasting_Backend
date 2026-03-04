@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.schemas import ForecastRequest
-from app.services.prediction_service import predict_fdi
-from app.services.trend_service import get_trend
+from schemas import ForecastRequest
+from services.prediction_service import predict_fdi
+from services.trend_service import get_trend
  
 app = FastAPI(title="FDI Forecast API")
  

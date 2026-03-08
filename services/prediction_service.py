@@ -3,6 +3,8 @@ import numpy as np
 import json
 from pathlib import Path
 from services.shap_service import compute_shap_values
+from services.insight_service import generate_executive_insight
+from utils.time_utils import next_quarter
  
 BASE_DIR = Path(__file__).resolve().parent.parent
  
@@ -50,10 +52,13 @@ def predict_fdi(input_data: dict):
     lower_bound = final_forecast - 1.96 * residual_std
     upper_bound = final_forecast + 1.96 * residual_std
  
+    forecast_period = next_quarter(metadata["last_observed_period"])
+ 
    
  
-    return {
+    result = {
         "forecast": round(final_forecast, 2),
+        "period": forecast_period,
         "confidence_interval": {
             "lower": round(lower_bound, 2),
             "upper": round(upper_bound, 2)
@@ -66,3 +71,7 @@ def predict_fdi(input_data: dict):
         },
         "drivers": drivers
     }
+ 
+    result["executive_insight"] = generate_executive_insight(result)
+ 
+    return result

@@ -4,11 +4,12 @@ from services.prediction_service import predict_fdi
  
 BASE_DIR = Path(__file__).resolve().parent.parent
  
-with open(BASE_DIR / "models/historical.json") as f:
-    historical_data = json.load(f)
+ 
  
  
 def get_trend(input_data: dict):
+    with open(BASE_DIR / "models/historical.json") as f:
+        historical_data = json.load(f)
  
     forecast_result = predict_fdi(input_data)
  
@@ -34,4 +35,3 @@ def get_trend(input_data: dict):
         },
         "percent_change_qoq": percent_change
     }
- 

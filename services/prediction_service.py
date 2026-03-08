@@ -17,6 +17,10 @@ with open(BASE_DIR / "models/metadata.json") as f:
     metadata = json.load(f)
  
  
+ 
+# -----------------------------
+# Reload models after retraining
+# -----------------------------
 def reload_models():
  
     global hw_model, svr_model, scaler, metadata
@@ -27,11 +31,16 @@ def reload_models():
  
     with open(BASE_DIR / "models/metadata.json") as f:
         metadata = json.load(f)
-       
+ 
+ 
+ 
+# -----------------------------
+# Prediction function
+# -----------------------------
 def predict_fdi(input_data: dict):
  
     # 1️⃣ Base HW forecast (1 step ahead)
-    hw_forecast = hw_model.forecast(1)[0]
+    hw_forecast = float(hw_model.forecast(1).iloc[0])
  
     # 2️⃣ Prepare SVR input
     features = np.array([[
@@ -45,7 +54,7 @@ def predict_fdi(input_data: dict):
     scaled_features = scaler.transform(features)
  
     # 3️⃣ Predict residual
-    residual_pred = svr_model.predict(scaled_features)[0]
+    residual_pred = float(svr_model.predict(scaled_features)[0])
  
     # SHAP explanations
     drivers = compute_shap_values(scaled_features)
@@ -56,17 +65,21 @@ def predict_fdi(input_data: dict):
     final_forecast = hw_forecast + residual_pred
  
     # 5️⃣ % Change
-    last_actual = metadata["last_actual_fdi"]
+    last_actual = float(metadata["last_actual_fdi"])
     percent_change_qoq = ((final_forecast - last_actual) / last_actual) * 100
  
     # 95% confidence interval
     lower_bound = final_forecast - 1.96 * residual_std
     upper_bound = final_forecast + 1.96 * residual_std
  
+    # 8️⃣ Forecast period
     forecast_period = next_quarter(metadata["last_observed_period"])
  
    
  
+    # -----------------------------
+    # Final response
+    # -----------------------------
     result = {
         "forecast": round(final_forecast, 2),
         "period": forecast_period,
@@ -86,3 +99,4 @@ def predict_fdi(input_data: dict):
     result["executive_insight"] = generate_executive_insight(result)
  
     return result
+ 

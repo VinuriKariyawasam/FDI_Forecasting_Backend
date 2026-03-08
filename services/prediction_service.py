@@ -17,6 +17,17 @@ with open(BASE_DIR / "models/metadata.json") as f:
     metadata = json.load(f)
  
  
+def reload_models():
+ 
+    global hw_model, svr_model, scaler, metadata
+ 
+    hw_model = joblib.load(BASE_DIR / "models/hw_model.pkl")
+    svr_model = joblib.load(BASE_DIR / "models/svr_model.pkl")
+    scaler = joblib.load(BASE_DIR / "models/scaler.pkl")
+ 
+    with open(BASE_DIR / "models/metadata.json") as f:
+        metadata = json.load(f)
+       
 def predict_fdi(input_data: dict):
  
     # 1️⃣ Base HW forecast (1 step ahead)

@@ -6,3 +6,8 @@ class ForecastRequest(BaseModel):
     exchange_rate_lag1: float
     interest_rate_lag1: float
     private_credit_lag1: float
+ 
+ 
+class ActualFDIUpdate(BaseModel):
+    quarter: str
+    fdi: float

@@ -2,8 +2,8 @@ import json
 from pathlib import Path
  
 BASE_DIR = Path(__file__).resolve().parent.parent
-HIST_PATH = BASE_DIR / "app/models/historical.json"
-META_PATH = BASE_DIR / "app/models/metadata.json"
+HIST_PATH = BASE_DIR / "models/historical.json"
+META_PATH = BASE_DIR / "models/metadata.json"
  
  
 def append_new_actual(quarter, fdi):

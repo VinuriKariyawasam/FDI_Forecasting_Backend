@@ -9,9 +9,9 @@ from sklearn.preprocessing import StandardScaler
  
 BASE_DIR = Path(__file__).resolve().parent.parent
  
-HIST_PATH = BASE_DIR / "app/models/historical.json"
-MACRO_DATA_PATH = BASE_DIR / "app/models/economic_indicators.json"
-MODEL_DIR = BASE_DIR / "app/models"
+HIST_PATH = BASE_DIR / "models/historical.json"
+MACRO_DATA_PATH = BASE_DIR / "models/economic_indicators.json"
+MODEL_DIR = BASE_DIR / "models"
  
  
 def train():
